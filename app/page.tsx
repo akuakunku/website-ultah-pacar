@@ -672,9 +672,10 @@ Your Partner`, [namaPacar]);
                   alt={memory.title}
                   className="memory-image"
                   loading="lazy"
-                  onError={(e) => {
-                    e.target.style.display = 'none';
-                    const iconDiv = e.target.parentElement?.querySelector('.memory-icon-fallback');
+                  onError={(e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+                    const imgElement = e.currentTarget;
+                    imgElement.style.display = 'none';
+                    const iconDiv = imgElement.parentElement?.querySelector('.memory-icon-fallback');
                     if (iconDiv) (iconDiv as HTMLElement).style.display = 'flex';
                   }}
                 />
