@@ -24,10 +24,10 @@ export default function Home() {
   const [imageErrors, setImageErrors] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   
-  const audioRef = useRef(null);
-  const typingIntervalRef = useRef(null);
-  const animationFrameRef = useRef(null);
-  const confettiTimeoutRef = useRef(null);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const typingIntervalRef = useRef<NodeJS.Timeout | null>(null);
+  const animationFrameRef = useRef<number | null>(null);
+  const confettiTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   
   const namaPacar = process.env.NEXT_PUBLIC_PARTNER_NAME || "NABILA";
 
@@ -166,9 +166,9 @@ const memories = useMemo(() => [
 
   // Animation data dengan useRef untuk performance
   const animationsRef = useRef({
-    bubbles: [],
-    floatingHearts: [],
-    stars: []
+    bubbles: [] as Array<any>,
+    floatingHearts: [] as Array<any>,
+    stars: [] as Array<any>
   });
 
   // Helper functions untuk update UI state
@@ -220,14 +220,14 @@ const memories = useMemo(() => [
   useEffect(() => {
     let ticking = false;
     
-    const updatePosition = (clientX, clientY) => {
+    const updatePosition = (clientX: number, clientY: number) => {
       setMousePosition({
         x: (clientX / window.innerWidth - 0.5) * 20,
         y: (clientY / window.innerHeight - 0.5) * 20,
       });
     };
     
-    const handleMouseMove = (e) => {
+    const handleMouseMove = (e: MouseEvent) => {
       if (!ticking) {
         animationFrameRef.current = requestAnimationFrame(() => {
           updatePosition(e.clientX, e.clientY);
@@ -237,7 +237,7 @@ const memories = useMemo(() => [
       }
     };
 
-    const handleTouchMove = (e) => {
+    const handleTouchMove = (e: TouchEvent) => {
       if (!ticking && e.touches[0]) {
         animationFrameRef.current = requestAnimationFrame(() => {
           updatePosition(e.touches[0].clientX, e.touches[0].clientY);
@@ -386,7 +386,7 @@ const memories = useMemo(() => [
   }, []);
 
   // Handle image error
-  const handleImageError = useCallback((slideIndex) => {
+  const handleImageError = useCallback((slideIndex: number) => {
     setImageErrors(prev => ({ ...prev, [slideIndex]: true }));
   }, []);
 
@@ -622,7 +622,7 @@ const memories = useMemo(() => [
                   onError={(e) => {
                     e.target.style.display = 'none';
                     const iconDiv = e.target.parentElement?.querySelector('.memory-icon-fallback');
-                    if (iconDiv) iconDiv.style.display = 'flex';
+                    if (iconDiv) (iconDiv as HTMLElement).style.display = 'flex';
                   }}
                 />
                 <div className="memory-icon-fallback" style={{ display: 'none' }}>
@@ -957,7 +957,7 @@ const memories = useMemo(() => [
 
       {/* Footer */}
       <footer className="footer">
-        <p className="footer">
+        <p className="text">
           Made with ❤️ for the most special person in my world
         </p>
         <p className="footer-year">
