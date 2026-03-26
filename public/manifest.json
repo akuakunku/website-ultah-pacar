@@ -1,0 +1,82 @@
+{
+  "name": "Happy Birthday NABILA",
+  "short_name": "Birthday",
+  "description": "Website ulang tahun spesial untuk NABILA tersayang",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#fce4ec",
+  "theme_color": "#f06292",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-384x384.png",
+      "sizes": "384x384",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/apple-icon.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "apple touch icon"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/screenshot-1.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "platform": "wide",
+      "label": "Hero section website"
+    },
+    {
+      "src": "/screenshot-2.png",
+      "sizes": "720x1280",
+      "type": "image/png",
+      "platform": "narrow",
+      "label": "Gallery section di mobile"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Buka Kejutan",
+      "short_name": "Kejutan",
+      "description": "Lihat kejutan spesial",
+      "url": "/#surprise",
+      "icons": [{ "src": "/icon-surprise.png", "sizes": "96x96" }]
+    },
+    {
+      "name": "Baca Surat Cinta",
+      "short_name": "Surat",
+      "description": "Baca surat cinta",
+      "url": "/#letter",
+      "icons": [{ "src": "/icon-letter.png", "sizes": "96x96" }]
+    }
+  ],
+  "categories": ["birthday", "celebration", "romantic"],
+  "lang": "id",
+  "dir": "ltr",
+  "prefer_related_applications": false,
+  "related_applications": [],
+  "scope": "/",
+  "scope_extensions": [
+    {
+      "origin": "*.birthday-nabila.vercel.app"
+    }
+  ],
+  "edge_side_panel": {
+    "preferred_width": 400
+  }
+}
