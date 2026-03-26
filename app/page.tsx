@@ -172,7 +172,7 @@ const memories = useMemo(() => [
   });
 
   // Helper functions untuk update UI state
-  const updateUiState = useCallback((updates) => {
+  const updateUiState = useCallback((updates: Partial<typeof uiState>) => {
     setUiState(prev => ({ ...prev, ...updates }));
   }, []);
 
