@@ -4,6 +4,29 @@ import { motion, AnimatePresence } from "framer-motion";
 import Confetti from "react-confetti";
 import "./birthday.css";
 
+// Define types
+interface Memory {
+  id: number;
+  icon: string;
+  title: string;
+  date: string;
+  desc: string;
+  color: string;
+  image: string;
+}
+
+interface Slide {
+  image: string;
+  caption: string;
+  message: string;
+  emoji: string;
+}
+
+interface PlaylistItem {
+  title: string;
+  url: string;
+}
+
 export default function Home() {
   // State management dengan grouping
   const [uiState, setUiState] = useState({
@@ -11,7 +34,7 @@ export default function Home() {
     showSurprise: false,
     showLoveLetter: false,
     showVolumeControl: false,
-    selectedMemory: null,
+    selectedMemory: null as Memory | null,
     isPlaying: false,
   });
   
@@ -21,7 +44,7 @@ export default function Home() {
   const [typedText, setTypedText] = useState("");
   const [volume, setVolume] = useState(50);
   const [currentTrack, setCurrentTrack] = useState(0);
-  const [imageErrors, setImageErrors] = useState({});
+  const [imageErrors, setImageErrors] = useState<Record<number, boolean>>({});
   const [isLoading, setIsLoading] = useState(true);
   
   const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -46,74 +69,75 @@ I Love You More Than Anything in This World! ❤️
 With love,
 Your Partner`, [namaPacar]);
 
- // Memories dengan foto dan kutipan terkenal
-const memories = useMemo(() => [
-  { 
-    id: 1, 
-    icon: "🏖️", 
-    title: "Cinta Sejati", 
-    date: "William Shakespeare", 
-    desc: "Cinta tidak pernah berakhir dengan kebahagiaan, cinta sejati tidak pernah berakhir.", 
-    color: "#FF6B6B", 
-    image: "/images/photo1.jpg" 
-  },
-  { 
-    id: 2, 
-    icon: "🎂", 
-    title: "Hadiah Terindah", 
-    date: "Rumi", 
-    desc: "Kamu bukan hanya kekasihku, tapi juga rumah bagiku. Tempat aku pulang setelah lelah berkelana.", 
-    color: "#4ECDC4", 
-    image: "/images/photo2.jpg" 
-  },
-  { 
-    id: 3, 
-    icon: "💑", 
-    title: "Takdir", 
-    date: "Paulo Coelho", 
-    desc: "Ketika seseorang benar-benar menginginkan sesuatu, seluruh alam semesta bersatu membantunya mewujudkannya.", 
-    color: "#45B7D1", 
-    image: "/images/photo3.jpg" 
-  },
-  { 
-    id: 4, 
-    icon: "🌹", 
-    title: "Cinta Abadi", 
-    date: "Antoine de Saint-Exupéry", 
-    desc: "Cinta bukan saling memandang satu sama lain, tetapi melihat ke arah yang sama bersama-sama.", 
-    color: "#96CEB4", 
-    image: "/images/photo4.jpg" 
-  },
-  { 
-    id: 5, 
-    icon: "🎉", 
-    title: "Kebahagiaan", 
-    date: "Confucius", 
-    desc: "Temukan kebahagiaan dalam pekerjaanmu, atau kau tak akan pernah bahagia.", 
-    color: "#FFEAA7", 
-    image: "/images/photo5.jpg" 
-  },
-  { 
-    id: 6, 
-    icon: "✈️", 
-    title: "Perjalanan", 
-    date: "J.R.R. Tolkien", 
-    desc: "Bukan semua yang berjalan tersesat. Tetaplah berjalan, dan kau akan menemukan jalan pulang ke hatiku.", 
-    color: "#D4A5A5", 
-    image: "/images/photo6.jpg" 
-  },
-  { 
-    id: 7, 
-    icon: "💕", 
-    title: "Selamanya", 
-    date: "Nicholas Sparks", 
-    desc: "Kau adalah bagian dari setiap keputusan yang kubuat, setiap langkah yang kuambil. Kau ada dalam setiap detak jantungku.", 
-    color: "#FFB6C1", 
-    image: "/images/photo7.jpg" 
-  },
-], []);
+  // Memories dengan foto dan kutipan terkenal
+  const memories: Memory[] = useMemo(() => [
+    { 
+      id: 1, 
+      icon: "🏖️", 
+      title: "Cinta Sejati", 
+      date: "William Shakespeare", 
+      desc: "Cinta tidak pernah berakhir dengan kebahagiaan, cinta sejati tidak pernah berakhir.", 
+      color: "#FF6B6B", 
+      image: "/images/photo1.jpg" 
+    },
+    { 
+      id: 2, 
+      icon: "🎂", 
+      title: "Hadiah Terindah", 
+      date: "Rumi", 
+      desc: "Kamu bukan hanya kekasihku, tapi juga rumah bagiku. Tempat aku pulang setelah lelah berkelana.", 
+      color: "#4ECDC4", 
+      image: "/images/photo2.jpg" 
+    },
+    { 
+      id: 3, 
+      icon: "💑", 
+      title: "Takdir", 
+      date: "Paulo Coelho", 
+      desc: "Ketika seseorang benar-benar menginginkan sesuatu, seluruh alam semesta bersatu membantunya mewujudkannya.", 
+      color: "#45B7D1", 
+      image: "/images/photo3.jpg" 
+    },
+    { 
+      id: 4, 
+      icon: "🌹", 
+      title: "Cinta Abadi", 
+      date: "Antoine de Saint-Exupéry", 
+      desc: "Cinta bukan saling memandang satu sama lain, tetapi melihat ke arah yang sama bersama-sama.", 
+      color: "#96CEB4", 
+      image: "/images/photo4.jpg" 
+    },
+    { 
+      id: 5, 
+      icon: "🎉", 
+      title: "Kebahagiaan", 
+      date: "Confucius", 
+      desc: "Temukan kebahagiaan dalam pekerjaanmu, atau kau tak akan pernah bahagia.", 
+      color: "#FFEAA7", 
+      image: "/images/photo5.jpg" 
+    },
+    { 
+      id: 6, 
+      icon: "✈️", 
+      title: "Perjalanan", 
+      date: "J.R.R. Tolkien", 
+      desc: "Bukan semua yang berjalan tersesat. Tetaplah berjalan, dan kau akan menemukan jalan pulang ke hatiku.", 
+      color: "#D4A5A5", 
+      image: "/images/photo6.jpg" 
+    },
+    { 
+      id: 7, 
+      icon: "💕", 
+      title: "Selamanya", 
+      date: "Nicholas Sparks", 
+      desc: "Kau adalah bagian dari setiap keputusan yang kubuat, setiap langkah yang kuambil. Kau ada dalam setiap detak jantungku.", 
+      color: "#FFB6C1", 
+      image: "/images/photo7.jpg" 
+    },
+  ], []);
+
   // Slideshow dengan 7 foto
-  const slides = useMemo(() => [
+  const slides: Slide[] = useMemo(() => [
     {
       image: "/images/photo1.jpg",
       caption: "Selamat Ulang Tahun! 🎂",
@@ -158,17 +182,46 @@ const memories = useMemo(() => [
     }
   ], []);
 
-  const playlist = useMemo(() => [
+  const playlist: PlaylistItem[] = useMemo(() => [
     { title: "Happy Birthday Song", url: "/music/happy-birthday.mp3" },
     { title: "Perfect - Ed Sheeran", url: "/music/perfect.mp3" },
     { title: "Thinking Out Loud", url: "/music/thinking-out-loud.mp3" }
   ], []);
 
   // Animation data dengan useRef untuk performance
-  const animationsRef = useRef({
-    bubbles: [] as Array<any>,
-    floatingHearts: [] as Array<any>,
-    stars: [] as Array<any>
+  interface Bubble {
+    width: number;
+    height: number;
+    left: number;
+    top: number;
+    delay: number;
+    duration: number;
+    color: string;
+  }
+
+  interface Heart {
+    left: number;
+    duration: number;
+    delay: number;
+    size: number;
+  }
+
+  interface Star {
+    left: number;
+    top: number;
+    size: number;
+    delay: number;
+    duration: number;
+  }
+
+  const animationsRef = useRef<{
+    bubbles: Bubble[];
+    floatingHearts: Heart[];
+    stars: Star[];
+  }>({
+    bubbles: [],
+    floatingHearts: [],
+    stars: []
   });
 
   // Helper functions untuk update UI state
@@ -957,7 +1010,7 @@ const memories = useMemo(() => [
 
       {/* Footer */}
       <footer className="footer">
-        <p className="text">
+        <p className="footer-text">
           Made with ❤️ for the most special person in my world
         </p>
         <p className="footer-year">
